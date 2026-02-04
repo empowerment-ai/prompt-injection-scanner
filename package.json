@@ -1,0 +1,33 @@
+{
+  "name": "prompt-injection-scanner",
+  "version": "1.0.0",
+  "description": "Scan LLM system prompts and applications for prompt injection vulnerabilities",
+  "main": "src/index.js",
+  "bin": {
+    "pi-scan": "./bin/pi-scan.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "scan": "node bin/pi-scan.js"
+  },
+  "keywords": [
+    "prompt-injection",
+    "llm",
+    "security",
+    "ai-security",
+    "owasp",
+    "vulnerability-scanner"
+  ],
+  "author": "Empowerment AI <https://empowerment-ai.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/empowerment-ai/prompt-injection-scanner"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
