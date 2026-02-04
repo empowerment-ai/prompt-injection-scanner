@@ -79,6 +79,30 @@ node bin/pi-scan.js your-prompt.txt --severity high
    ✅ No issues found!
 ```
 
+## Web UI
+
+The scanner includes a sample web frontend — paste in a system prompt and get instant visual results. **100% client-side** — nothing leaves the browser.
+
+```bash
+# Start the local dev server
+npm run web
+
+# Or specify a port
+node web/serve.js 8080
+```
+
+Then open [http://localhost:3001](http://localhost:3001).
+
+The web UI includes:
+- Dark-themed interface with visual score ring (0–100)
+- Color-coded findings by severity (Critical → Low)
+- Inline match highlighting with redacted secrets
+- Actionable fix recommendations for every finding
+- "Load Example" buttons for vulnerable and hardened prompts
+- Ctrl+Enter keyboard shortcut to scan
+
+> **Deploy it:** The web UI is a single `web/index.html` file with zero dependencies — drop it on any static host (GitHub Pages, Vercel, Netlify, S3) as-is.
+
 ## Use as a Library
 
 ```javascript

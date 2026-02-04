@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test test/*.test.js",
-    "scan": "node bin/pi-scan.js"
+    "scan": "node bin/pi-scan.js",
+    "web": "node web/serve.js"
   },
   "keywords": [
     "prompt-injection",
