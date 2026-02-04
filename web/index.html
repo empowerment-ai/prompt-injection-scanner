@@ -422,6 +422,137 @@
     }
 
     /* ============================================
+       How It Works + Disclaimer
+       ============================================ */
+    .info-sections {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .info-card-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .info-card-toggle:hover { background: var(--bg-card-hover); }
+    .info-card-toggle .chevron {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    .info-card-toggle.open .chevron { transform: rotate(180deg); }
+
+    .info-card-body {
+      display: none;
+      padding: 0 1.5rem 1.25rem;
+    }
+    .info-card-body.open { display: block; }
+
+    .info-card-body p,
+    .info-card-body li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .info-card-body h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1rem 0 0.4rem;
+    }
+    .info-card-body h4:first-child { margin-top: 0; }
+
+    .info-card-body ul {
+      padding-left: 1.25rem;
+      margin: 0.25rem 0 0;
+    }
+    .info-card-body li { margin: 0.25rem 0; }
+
+    .info-card-body code {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      color: var(--secondary);
+    }
+
+    .rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0;
+      font-size: 0.8rem;
+    }
+    .rule-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .rule-table td {
+      padding: 0.4rem 0.75rem;
+      border-bottom: 1px solid #1e2a3a44;
+      color: var(--text-muted);
+    }
+    .rule-table tr:last-child td { border-bottom: none; }
+
+    .sev-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+    .sev-dot.critical { background: #ef4444; }
+    .sev-dot.high { background: #f97316; }
+    .sev-dot.medium { background: #f59e0b; }
+    .sev-dot.low { background: #3b82f6; }
+
+    .warning-box {
+      background: #f59e0b0a;
+      border: 1px solid #f59e0b44;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+    }
+    .warning-box h3 {
+      color: var(--secondary);
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .warning-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ============================================
        Responsive
        ============================================ */
     @media (max-width: 640px) {
@@ -464,6 +595,78 @@ Paste your full system prompt here to check for:
 
   <div class="results-section" id="results-section">
     <!-- Populated by JS -->
+  </div>
+
+  <div class="info-sections">
+    <!-- How It Works -->
+    <div class="info-card">
+      <button class="info-card-toggle" onclick="toggleInfo(this)">
+        <span>🔍 How It Works</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="info-card-body">
+        <p>The scanner analyzes your system prompt text using <strong>15+ detection rules</strong> across 5 security categories. It combines regex pattern matching (for secrets, URLs, connection strings) with structural heuristic analysis (for missing defenses, excessive permissions).</p>
+
+        <h4>Detection Categories</h4>
+        <table class="rule-table">
+          <thead>
+            <tr><th>Category</th><th>OWASP</th><th>What It Catches</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="sev-dot critical"></span>Sensitive Data Exposure</td>
+              <td>LLM06</td>
+              <td>API keys, passwords, PII (SSNs, credit cards), database strings, internal URLs</td>
+            </tr>
+            <tr>
+              <td><span class="sev-dot high"></span>Injection Defense Gaps</td>
+              <td>LLM01</td>
+              <td>Missing anti-injection instructions, prompt leakage risk, instruction-only defenses</td>
+            </tr>
+            <tr>
+              <td><span class="sev-dot high"></span>Excessive Agency</td>
+              <td>LLM08</td>
+              <td>Unrestricted tool access, destructive actions without confirmation</td>
+            </tr>
+            <tr>
+              <td><span class="sev-dot medium"></span>Output Handling</td>
+              <td>LLM02</td>
+              <td>Missing output sanitization, auto-execution of generated code</td>
+            </tr>
+            <tr>
+              <td><span class="sev-dot low"></span>Attack Surface</td>
+              <td>LLM01/02</td>
+              <td>Overly detailed context, multi-role prompts, HTML rendering</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Scoring</h4>
+        <p>Each prompt starts at <strong>100 points</strong>. Findings reduce the score based on severity: Critical (−25), High (−15), Medium (−8), Low (−3). The final score maps to a letter grade (A through F).</p>
+
+        <h4>Two Detection Methods</h4>
+        <ul>
+          <li><strong>Pattern matching</strong> — Regex patterns detect known secret formats (AWS keys, GitHub tokens, Slack tokens, Bearer tokens), PII patterns (SSNs, credit cards), database URIs, and internal URLs.</li>
+          <li><strong>Structural analysis</strong> — Heuristic functions check for the <em>absence</em> of security controls: no injection defense instructions, no prompt protection rules, no output format restrictions, no tool usage boundaries.</li>
+        </ul>
+
+        <h4>Privacy</h4>
+        <p>Everything runs <strong>100% in your browser</strong> using JavaScript. Your prompt text is never sent to any server. The full source code is <a href="https://github.com/empowerment-ai/prompt-injection-scanner" target="_blank" rel="noopener">open source on GitHub</a>.</p>
+
+        <h4>CLI &amp; Library</h4>
+        <p>This scanner is also available as a <strong>Node.js CLI tool</strong> and <strong>importable library</strong> for CI/CD integration. Clone the repo and run <code>node bin/pi-scan.js your-prompt.txt</code> — or import <code>scanPrompt()</code> directly in your code.</p>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="warning-box">
+      <h3>⚠️ Educational Purpose Only</h3>
+      <p>
+        This tool is for learning about AI security vulnerabilities and improving the security posture of your own LLM applications.
+        Static analysis can catch common issues, but it cannot guarantee security — always use defense in depth.
+        Never use the techniques or knowledge gained here maliciously against systems you don't own.
+      </p>
+    </div>
   </div>
 
   <footer>
@@ -992,6 +1195,13 @@ textarea.addEventListener("keydown", (e) => {
     window.runScan();
   }
 });
+
+// Toggle info cards
+window.toggleInfo = function(btn) {
+  btn.classList.toggle("open");
+  const body = btn.nextElementSibling;
+  body.classList.toggle("open");
+};
 </script>
 
 </body>
