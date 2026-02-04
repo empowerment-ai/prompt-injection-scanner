@@ -393,12 +393,33 @@
       border-top: 1px solid var(--border);
       margin-top: 2rem;
     }
-    footer p {
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .footer-links a {
+      color: var(--primary-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-sep { color: var(--text-dim); font-size: 0.7rem; }
+    .footer-tagline {
       font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .footer-tagline a { color: var(--primary-dim); text-decoration: none; }
+    .footer-tagline a:hover { color: var(--primary); }
+    .footer-note {
+      font-size: 0.75rem;
       color: var(--text-dim);
     }
-    footer a { color: var(--primary-dim); text-decoration: none; }
-    footer a:hover { color: var(--primary); }
 
     /* ============================================
        Responsive
@@ -446,12 +467,19 @@ Paste your full system prompt here to check for:
   </div>
 
   <footer>
-    <p>
-      <a href="https://github.com/empowerment-ai/prompt-injection-scanner" target="_blank" rel="noopener">GitHub</a> ·
-      <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener">OWASP LLM Top 10</a> ·
+    <div class="footer-links">
       <a href="https://empowerment-ai.com" target="_blank" rel="noopener">Empowerment AI</a>
-    </p>
-    <p style="margin-top: 0.5rem;">100% client-side — your prompts never leave your browser.</p>
+      <span class="footer-sep">·</span>
+      <a href="https://prompt-injection-playground-randy-michaks-projects.vercel.app" target="_blank" rel="noopener">🎮 Playground</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/empowerment-ai/prompt-injection-scanner" target="_blank" rel="noopener">GitHub</a>
+      <span class="footer-sep">·</span>
+      <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener">OWASP LLM Top 10</a>
+      <span class="footer-sep">·</span>
+      <a href="https://youtube.com/@empowermentAI" target="_blank" rel="noopener">YouTube</a>
+    </div>
+    <p class="footer-tagline">Built by <a href="https://empowerment-ai.com" target="_blank" rel="noopener">Empowerment AI</a> — Realize Your Potential, Harness the Power of AI</p>
+    <p class="footer-note">100% client-side — your prompts never leave your browser.</p>
   </footer>
 </div>
 
