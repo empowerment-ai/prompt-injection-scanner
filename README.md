@@ -12,15 +12,16 @@ This scanner catches those issues during development — like a linter for AI se
 
 ## What It Detects
 
-| Category | OWASP LLM | Examples |
-|----------|-----------|----------|
-| **Sensitive Data Exposure** | LLM06 | API keys, passwords, PII, database strings, internal URLs in prompts |
-| **Injection Defense Gaps** | LLM01 | Missing anti-injection instructions, prompt leakage risk, instruction-only defenses |
-| **Excessive Agency** | LLM08 | Unrestricted tool access, destructive actions without confirmation |
-| **Output Handling** | LLM02 | No sanitization, auto-execution of generated code |
-| **Attack Surface** | LLM01/02 | Overly detailed context, multi-role prompts, HTML rendering enabled |
+| Category | OWASP LLM (2025) | Examples |
+|----------|------------------|----------|
+| **Sensitive Data Exposure** | LLM02 | API keys, passwords, PII, database strings, internal URLs in prompts |
+| **Injection Defense Gaps** | LLM01 | Missing anti-injection instructions, instruction-only defenses |
+| **System Prompt Leakage** | LLM07 | No protection against system-prompt extraction |
+| **Excessive Agency** | LLM06 | Unrestricted tool access, destructive actions without confirmation |
+| **Output Handling** | LLM05 | No sanitization, auto-execution of generated code |
+| **Attack Surface** | LLM01/05 | Overly detailed context, multi-role prompts, HTML rendering enabled |
 
-**15+ detection rules** with severity ratings (Critical → Low), OWASP LLM Top 10 mapping, and actionable fix recommendations.
+**15 detection rules** with severity ratings (Critical → Low), mapped to the [OWASP Top 10 for LLM Applications 2025](https://owasp.org/www-project-top-10-for-large-language-model-applications/), with actionable fix recommendations.
 
 ## Quick Start
 
@@ -57,18 +58,18 @@ node bin/pi-scan.js your-prompt.txt --severity high
    Findings: 2 critical, 4 high, 2 medium, 1 low
 
    🚨 [CRITICAL] PII or Sensitive Personal Data
-      SDE-003 • Sensitive Data Exposure • OWASP LLM06
+      SDE-003 • Sensitive Data Exposure • OWASP LLM02
       Line 12: 123-45-6789
 
    🚨 [CRITICAL] Database Connection String
-      SDE-005 • Sensitive Data Exposure • OWASP LLM06
+      SDE-005 • Sensitive Data Exposure • OWASP LLM02
       Line 7: postgres://admin:••••••••@db.••••••••
 
    🔴 [HIGH] No Injection Defense Instructions
       INJ-001 • Injection Defense • OWASP LLM01
 
    🔴 [HIGH] Unrestricted Tool/Function Access
-      AGN-001 • Excessive Agency • OWASP LLM08
+      AGN-001 • Excessive Agency • OWASP LLM06
       ...
 ```
 
@@ -197,14 +198,15 @@ Each prompt starts at **100 points**. Findings reduce the score:
 
 ## OWASP LLM Top 10 Coverage
 
-This scanner maps findings to the [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/):
+This scanner maps findings to the [OWASP Top 10 for LLM Applications 2025](https://owasp.org/www-project-top-10-for-large-language-model-applications/):
 
-- **LLM01**: Prompt Injection
-- **LLM02**: Insecure Output Handling
-- **LLM06**: Sensitive Information Disclosure
-- **LLM07**: Insecure Plugin Design
-- **LLM08**: Excessive Agency
-- **LLM10**: Unbounded Consumption
+- **LLM01**: Prompt Injection — INJ-001, INJ-002, ATK-001, ATK-002
+- **LLM02**: Sensitive Information Disclosure — SDE-001 through SDE-005
+- **LLM05**: Improper Output Handling — OUT-001, OUT-002, ATK-003
+- **LLM06**: Excessive Agency — AGN-001, AGN-002
+- **LLM07**: System Prompt Leakage — INJ-003
+
+> Note: this scanner targets the prompt-time risks you can catch by static analysis. The other 2025 categories — LLM03 Supply Chain, LLM04 Data and Model Poisoning, LLM08 Vector and Embedding Weaknesses, LLM09 Misinformation, LLM10 Unbounded Consumption — are runtime/infrastructure concerns outside a prompt linter's scope.
 
 ## Requirements
 

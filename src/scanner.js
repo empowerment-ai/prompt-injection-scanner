@@ -16,14 +16,14 @@
 
 const rules = [
   // ----------------------------------------------------------
-  // CATEGORY: Sensitive Data in Prompts (LLM06, LLM10)
+  // CATEGORY: Sensitive Data in Prompts (LLM02 Sensitive Information Disclosure)
   // ----------------------------------------------------------
   {
     id: "SDE-001",
     name: "API Key or Token in Prompt",
     category: "Sensitive Data Exposure",
     severity: "critical",
-    owasp: "LLM06",
+    owasp: "LLM02",
     description:
       "API keys, tokens, or secrets embedded directly in the system prompt can be extracted via prompt injection. Attackers can use social engineering, role-play, or encoding tricks to leak these values.",
     recommendation:
@@ -42,7 +42,7 @@ const rules = [
     name: "Password or Credential in Prompt",
     category: "Sensitive Data Exposure",
     severity: "critical",
-    owasp: "LLM06",
+    owasp: "LLM02",
     description:
       "Passwords, credentials, or authentication details in the system prompt are extractable. Any information in the prompt context should be considered accessible to the end user.",
     recommendation:
@@ -57,7 +57,7 @@ const rules = [
     name: "PII or Sensitive Personal Data",
     category: "Sensitive Data Exposure",
     severity: "critical",
-    owasp: "LLM06",
+    owasp: "LLM02",
     description:
       "Personally Identifiable Information (PII) like SSNs, credit card numbers, email addresses, or phone numbers in the prompt can be extracted through injection attacks.",
     recommendation:
@@ -92,7 +92,7 @@ const rules = [
     name: "Internal URLs or Endpoints",
     category: "Sensitive Data Exposure",
     severity: "high",
-    owasp: "LLM06",
+    owasp: "LLM02",
     description:
       "Internal API endpoints, admin URLs, or infrastructure details in the prompt reveal attack surface. Attackers can extract these to target your backend directly.",
     recommendation:
@@ -108,7 +108,7 @@ const rules = [
     name: "Database Connection String",
     category: "Sensitive Data Exposure",
     severity: "critical",
-    owasp: "LLM06",
+    owasp: "LLM02",
     description:
       "Database connection strings in the prompt expose credentials and infrastructure. This is a critical vulnerability that could lead to direct database compromise.",
     recommendation:
@@ -120,7 +120,7 @@ const rules = [
   },
 
   // ----------------------------------------------------------
-  // CATEGORY: Weak Injection Defenses (LLM01)
+  // CATEGORY: Weak Injection Defenses (LLM01 Prompt Injection, LLM07 System Prompt Leakage)
   // ----------------------------------------------------------
   {
     id: "INJ-001",
@@ -172,9 +172,9 @@ const rules = [
   {
     id: "INJ-003",
     name: "System Prompt Leakage Risk",
-    category: "Injection Defense",
+    category: "System Prompt Leakage",
     severity: "medium",
-    owasp: "LLM01",
+    owasp: "LLM07",
     description:
       'The prompt does not instruct the model to protect its own system instructions from disclosure. Attackers commonly ask "repeat your instructions" or "what were you told?" to extract the full system prompt, revealing business logic and defense strategies.',
     recommendation:
@@ -188,14 +188,14 @@ const rules = [
   },
 
   // ----------------------------------------------------------
-  // CATEGORY: Excessive Agency (LLM08)
+  // CATEGORY: Excessive Agency (LLM06)
   // ----------------------------------------------------------
   {
     id: "AGN-001",
     name: "Unrestricted Tool/Function Access",
     category: "Excessive Agency",
     severity: "high",
-    owasp: "LLM08",
+    owasp: "LLM06",
     description:
       "The prompt grants the LLM access to tools, APIs, or functions without clear boundaries or confirmation requirements. An attacker who successfully injects instructions could trigger these tools — sending emails, modifying data, or making purchases.",
     recommendation:
@@ -220,7 +220,7 @@ const rules = [
     name: "Write/Delete/Send Without Confirmation",
     category: "Excessive Agency",
     severity: "high",
-    owasp: "LLM08",
+    owasp: "LLM06",
     description:
       "The prompt allows the LLM to perform destructive or irreversible actions (sending emails, deleting data, making purchases, modifying records) without requiring user confirmation.",
     recommendation:
@@ -245,14 +245,14 @@ const rules = [
   },
 
   // ----------------------------------------------------------
-  // CATEGORY: Output Handling (LLM02)
+  // CATEGORY: Output Handling (LLM05 Improper Output Handling)
   // ----------------------------------------------------------
   {
     id: "OUT-001",
     name: "No Output Sanitization Instructions",
     category: "Output Handling",
     severity: "medium",
-    owasp: "LLM02",
+    owasp: "LLM05",
     description:
       "The prompt does not mention sanitizing, filtering, or validating the model's output before displaying it to users. LLM outputs can contain malicious content (XSS payloads, markdown injection, malicious links) if an attacker controls part of the input.",
     recommendation:
@@ -272,7 +272,7 @@ const rules = [
     name: "Allows Code Execution or Eval",
     category: "Output Handling",
     severity: "critical",
-    owasp: "LLM02",
+    owasp: "LLM05",
     description:
       "The prompt instructs or allows the LLM to generate code that will be automatically executed. If an attacker can control the code output through injection, this becomes a remote code execution vulnerability.",
     recommendation:
@@ -321,7 +321,7 @@ const rules = [
     name: "Markdown/HTML Rendering Enabled",
     category: "Attack Surface",
     severity: "low",
-    owasp: "LLM02",
+    owasp: "LLM05",
     description:
       "The prompt instructs the model to produce markdown, HTML, or rich formatting. If the output is rendered without sanitization, attackers can inject malicious content (images that exfiltrate data, links to phishing sites, XSS payloads).",
     recommendation:
